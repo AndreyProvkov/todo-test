@@ -9,10 +9,11 @@ export default class AppList extends Component {
                 <h2 className='app-list__title'>
                     Задачи
                 </h2>
-                <input type='text' placeholder='Поиск по задачам' />
+                <input type='text' placeholder='Поиск задач' />
                 <TaskList
-                    // Прокидываем далее в компонент свойство tasks
+                    // Прокидываем далее в компонент свойства и методы
                     tasks={this.props.tasks}
+                    setSelectedTask={this.props.setSelectedTask}
                 />
             </div>
         )

@@ -10,6 +10,7 @@ export default class App extends Component {
         super(prop)
         // Определяем состояние компонента
         this.state = {
+            selectedTask: 1,
             tasks: [
                 {
                     id: 1,
@@ -19,10 +20,13 @@ export default class App extends Component {
                 {
                     id: 2,
                     title: 'Доделать задание',
-                    description: 'Задание доделать до 16ого числа до закрытия приема заявок'
+                    description: 'Задание доделать до 16ого числа до закрытия приема заявок стажировки'
                 }
             ]
         }
+        // Привязываем контекст класса к методам
+        this.setSelectedTask = this.setSelectedTask.bind(this)
+        this.getSelectedTask = this.getSelectedTask.bind(this)
     }
 
     // Render вызывается каждый раз при изменении состояния
@@ -33,12 +37,23 @@ export default class App extends Component {
                     {/* Используем два созданных компонента и передаем им свойства (props) */}
                     <AppList
                         tasks={this.state.tasks}
+                        setSelectedTask={this.setSelectedTask}
                     />
                     <AppForm
-                        tasks={this.state.tasks}
+                        task={this.getSelectedTask()}
                     />
                 </div>
             </div>
         )
+    }
+
+    // Получаем id выбранной задачи из списка задач и записываем в state
+    setSelectedTask(id) {
+        this.setState({ selectedTask: id })
+    }
+
+    // На основе id выбранной задачи из списка задач возвращаем соответствующий объект задачи
+    getSelectedTask() {
+        return this.state.tasks.filter(task => task.id === this.state.selectedTask).pop()
     }
 }
