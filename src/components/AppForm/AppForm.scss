@@ -1,4 +1,39 @@
 .app-form {
     flex: 1 1 auto;
     padding: 1.5rem;
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__buttons {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+}
+
+.btn-edit,
+.btn-delete {
+    width: 3.5rem;
+    height: 3.5rem;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    background-color: #FFFFFF;
+    box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.2);
+    border-radius: 0.5rem;
+    padding: 1rem
+}
+
+.btn-edit {
+    background-image: url('../../../public/btn-edit.svg');
+    margin-right: 2rem;
+}
+
+.btn-delete {
+    background-image: url('../../../public/btn-delete.svg');
 }

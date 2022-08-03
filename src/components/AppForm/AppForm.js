@@ -78,9 +78,26 @@ export default class AppForm extends Component {
                             Задач нет
                         </h2> :
                         <div className='app-form__is-task'>
-                            <h2 className='app-form__title'>
-                                {title} задачи
-                            </h2>
+                            <div className='app-form__header'>
+                                <h2 className='app-form__header-title'>
+                                    {title} задачи
+                                </h2>
+                                {
+                                    // Отображаем кнопки удаления и редактирования когда находимся в режиме просмотра
+                                    (appStatus === 'watch') &&
+                                    <div className='app-form__buttons'>
+                                        <button
+                                            type='button'
+                                            className='btn-edit'
+                                            onClick={(e) => this.changeAppStatus(e, 'edit')}
+                                        />
+                                        <button
+                                            type='button'
+                                            className='btn-delete'
+                                        />
+                                    </div>
+                                }
+                            </div>
                             <h3 className='app-form__subtitle'>
                                 Название задачи
                             </h3>
@@ -90,7 +107,7 @@ export default class AppForm extends Component {
                             </h3>
                             {taskDescription}
                             {
-                                // Отображаем кнопки, когда находимся в состоянии отличном от просмотра
+                                // Отображаем кнопки, когда находимся не в режиме просмотра
                                 (appStatus !== 'watch') &&
                                 <div className='app-form__buttons'>
                                     <button
@@ -113,7 +130,7 @@ export default class AppForm extends Component {
                 }
                 {
                     // Скрываем кнопку "добавить", когда открываем форму добавления
-                    (appStatus !== 'add') &&
+                    (appStatus === 'watch') &&
                     <button
                         className='btn-add'
                         type='text'
