@@ -11,49 +11,69 @@ export default class AppForm extends Component {
             taskDescription: ''
         }
         this.changeAppStatus = this.changeAppStatus.bind(this)
+        this.handleChange = this.handleChange.bind(this)
     }
 
     render() {
-        // Установим начальные значения для рендера
+        // Сохраним в переменные значение получаемой задачи и текущего состояния
         const task = this.props.task
         const appStatus = this.state.appStatus
-        let buttonText = (appStatus === 'add') ? 'Добавить' : 'Сохранить'
-        let title = 'Просмотр'
-        let taskName = <input type='text' placeholder='Название задачи' name='taskTitle' value={this.state.taskTitle} onChange={this.handleChange} />
-        let taskDescription = <textarea placeholder='Описание задачи' name='taskDescription' value={this.state.taskDescription} onChange={this.handleChange} />
-        let btn = (<div>
-            <button onClick={(e) => this.changeAppStatus(e, 'watch')}>Отмена</button>
-            <button>{buttonText}</button>
-        </div>)
+
+        // Определяем переменные
+        let buttonText
+        let taskName
+        let taskDescription
+        let title
 
         // Проверяем состояние приложения, в зависимости от условия присваиваем переменным подходящие значения
-        switch (appStatus) {
-            case 'add': {
-                title = 'Добавление'
-                buttonText = 'Добавить'
-                break;
-            }
-            case 'edit': {
-                title = 'Редактирование'
-                break;
-            }
-            default: {
-                taskName = (<p>
+        if (appStatus === 'edit' || appStatus === 'add') {
+            taskName = (
+                <input
+                    type='text'
+                    className='app-form__input'
+                    placeholder='Название задачи'
+                    name='taskTitle'
+                    value={this.state.taskTitle}
+                    onChange={this.handleChange}
+                />
+            )
+            taskDescription = (
+                <textarea
+                    placeholder='Описание задачи'
+                    className='app-form__textarea'
+                    name='taskDescription'
+                    value={this.state.taskDescription}
+                    onChange={this.handleChange}
+                />
+            )
+        }
+        if (appStatus === 'edit') {
+            title = 'Редактирование'
+            buttonText = 'Сохранить'
+        }
+        if (appStatus === 'add') {
+            title = 'Добавление'
+            buttonText = 'Добавить'
+        }
+        if (appStatus === 'watch' && task) {
+            title = 'Просмотр'
+            taskName = (
+                <p className='app-form__task-info'>
                     {task.title}
-                </p>)
-                taskDescription = (<p>
+                </p>
+            )
+            taskDescription = (
+                <p className='app-form__task-info'>
                     {task.description}
-                </p>)
-                btn = <button type='text' onClick={(e) => this.changeAppStatus(e, 'add')}>+</button>
-                break;
-            }
+                </p>
+            )
         }
 
         return (
             <form className='app-form'>
                 {
                     // Используем условный рендеринг в зависимости от существования задачи
-                    !task ?
+                    (!task && appStatus !== 'add') ?
                         <h2 className='app-form__no-task'>
                             Задач нет
                         </h2> :
@@ -69,16 +89,49 @@ export default class AppForm extends Component {
                                 Описание задачи
                             </h3>
                             {taskDescription}
+                            {
+                                // Отображаем кнопки, когда находимся в состоянии отличном от просмотра
+                                (appStatus !== 'watch') &&
+                                <div className='app-form__buttons'>
+                                    <button
+                                        className='btn'
+                                        type='button'
+                                        onClick={(e) => this.changeAppStatus(e, 'watch')}
+                                    >
+                                        Отмена
+                                    </button>
+                                    <button
+                                        className='btn'
+                                        type='submit'
+                                    >
+                                        {/* Вставляем ранее присвоенный текст кнопки */}
+                                        {buttonText}
+                                    </button>
+                                </div>
+                            }
                         </div>
                 }
-                {btn}
+                {
+                    // Скрываем кнопку "добавить", когда открываем форму добавления
+                    (appStatus !== 'add') &&
+                    <button
+                        className='btn-add'
+                        type='text'
+                        onClick={(e) => this.changeAppStatus(e, 'add')}
+                    >
+                        +
+                    </button>
+                }
+
             </form>
         )
     }
 
     // Меняем статус приложения в зависимости от нажатой кнопки
     changeAppStatus(e, status) {
+        // Отменяем стандартное поведение кнопки в форме
         e.preventDefault()
+
         this.setState({ appStatus: status })
 
         // В зависимости от текущего состояния приложения заполняем поля ввода
@@ -95,6 +148,7 @@ export default class AppForm extends Component {
         }
     }
 
+    // Сохраняем значение поля после изменения в свойство равное переменной name изменяемого поля
     handleChange(e) {
         this.setState({ [e.target.name]: e.target.value })
     }
