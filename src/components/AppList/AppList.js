@@ -13,6 +13,7 @@ export default class AppList extends Component {
                 <TaskList
                     // Прокидываем далее в компонент свойства и методы
                     tasks={this.props.tasks}
+                    selectedTask={this.props.selectedTask}
                     setSelectedTask={this.props.setSelectedTask}
                 />
             </div>

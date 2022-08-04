@@ -49,6 +49,7 @@ export default class App extends Component {
                     {/* Используем два созданных компонента и передаем им свойства (props) */}
                     <AppList
                         tasks={this.state.tasks}
+                        selectedTask={this.state.selectedTask}
                         setSelectedTask={this.setSelectedTask}
                     />
                     <AppForm

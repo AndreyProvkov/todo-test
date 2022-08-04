@@ -5,6 +5,7 @@
     margin-bottom: 1rem;
     color: white;
     padding: .5rem;
+    cursor: pointer;
 
     &_pending {
         background-color: gray;
@@ -16,5 +17,22 @@
 
     &_completed {
         background-color: green;
+    }
+
+    &_active {
+        position: relative;
+        opacity: 0.7;
+
+        &::after {
+            content: '';
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background-color: white;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 5%;
+        }
     }
 }

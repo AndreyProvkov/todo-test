@@ -12,6 +12,7 @@ export default class TaskList extends Component {
                     key={task.id}
                     task={task}
                     id={task.id}
+                    selectedTask={this.props.selectedTask}
                     setSelectedTask={this.props.setSelectedTask}
                 />)
         })
