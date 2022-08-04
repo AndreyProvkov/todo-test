@@ -1,0 +1,18 @@
+// Создаем контейнер приложения с размерами и задаем основному блоку стили
+
+.container {
+    max-width: 900px;
+    height: 100%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.app {
+    display: flex;
+    height: 60%;
+    width: 80%;
+    box-shadow: 0 1rem 4rem rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+}

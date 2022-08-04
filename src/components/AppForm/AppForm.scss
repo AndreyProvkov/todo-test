@@ -1,0 +1,78 @@
+.app-form {
+    flex: 1 1 auto;
+    padding: 1.5rem;
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__buttons {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+
+    &__select option {
+
+        &[value='pending'] {
+            color: gray;
+        }
+
+        &[value='process'] {
+            color: DodgerBlue;
+        }
+
+        &[value='completed'] {
+            color: green;
+        }
+    }
+
+    &__task-status {
+        display: inline-block;
+        padding: .5rem 1rem;
+        color: white;
+
+        &_pending {
+            background-color: gray;
+        }
+
+        &_process {
+            background-color: DodgerBlue;
+        }
+
+        &_completed {
+            background-color: green;
+        }
+    }
+}
+
+.btn-edit,
+.btn-delete {
+    width: 3.5rem;
+    height: 3.5rem;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    background-color: #FFFFFF;
+    box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    transition: .3s all;
+
+    &:hover {
+        box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.3);
+    }
+}
+
+.btn-edit {
+    background-image: url('../../../public/btn-edit.svg');
+    margin-right: 2rem;
+}
+
+.btn-delete {
+    background-image: url('../../../public/btn-delete.svg');
+}
