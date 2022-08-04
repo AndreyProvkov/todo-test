@@ -91,6 +91,11 @@ export default class App extends Component {
         e.preventDefault()
         // Используем деструктуризацию массива
         let [id, taskTitle, taskDescription] = values
+
+        // Убираем пробелы на концах строки и несколько пробелов подряд в самой строке
+        taskTitle = taskTitle.trim().replace(/\s+/gi, ' ')
+        taskDescription = taskDescription.trim().replace(/\s+/gi, ' ')
+
         // Проверяем состояние приложения
         if (status === 'edit') {
             // Если изменяем задачу, то перезаписываем массив задач с новыми данными в изменяемой задаче
