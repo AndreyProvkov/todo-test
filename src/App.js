@@ -75,6 +75,10 @@ export default class App extends Component {
 
     // На основе id выбранной задачи из списка задач возвращаем соответствующий объект задачи
     getSelectedTask() {
+        // Проверяем существуют ли задачи
+        if (this.state.tasks.length === 0) {
+            return false
+        }
         return this.state.tasks.filter(task => task.id === this.state.selectedTask).pop()
     }
 
