@@ -54,12 +54,12 @@ export default class App extends Component {
     }
 
     // Используем метод жизненного цикла для отслеживания изменения состояния
-    componentDidUpdate(newProps, newState) {
+    componentDidUpdate(prevProps, prevState) {
         const tasks = this.state.tasks
         // Будем изменять выбранную задачу, когда задачи существуют и их количество изменилось
-        if (newState.tasks.length !== tasks.length && tasks.length !== 0) {
+        if (prevState.tasks.length !== tasks.length && tasks.length !== 0) {
             // Так как новые задачи будут добавляться в конец списка задач, то выбираем последнюю задачу из списка и перезаписываем состояние для выбранной задачи
-            if (newState.tasks.length > tasks.length) {
+            if (prevState.tasks.length < tasks.length) {
                 this.setState({ selectedTask: tasks[tasks.length - 1].id })
             } else {
                 // При удалении задачи из списка будем выбирать первую в массиве задач
