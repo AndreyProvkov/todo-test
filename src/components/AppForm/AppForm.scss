@@ -24,9 +24,14 @@
     background-position: center;
     border: none;
     background-color: #FFFFFF;
-    box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.1);
     border-radius: 0.5rem;
-    padding: 1rem
+    padding: 1rem;
+    transition: .3s all;
+
+    &:hover {
+        box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.3);
+    }
 }
 
 .btn-edit {

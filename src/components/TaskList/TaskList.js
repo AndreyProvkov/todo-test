@@ -17,7 +17,7 @@ export default class TaskList extends Component {
         })
 
         return (
-            <ul>
+            <ul className='app-list__list'>
                 {/* Распаковываем массив tasks */}
                 {tasks}
             </ul>

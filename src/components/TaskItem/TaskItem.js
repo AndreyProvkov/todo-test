@@ -5,6 +5,7 @@ export default class TaskItem extends Component {
     render() {
         return (
             <li
+                className='app-list__list-item'
                 // Добавляем обработчик нажатий на элемент списка, вызываем переданный метод и передаем в аргументах id выбранного элемента
                 onClick={() => this.props.setSelectedTask(this.props.id)}
             >
