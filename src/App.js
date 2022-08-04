@@ -30,6 +30,7 @@ export default class App extends Component {
         this.deleteTask = this.deleteTask.bind(this)
         this.submitTask = this.submitTask.bind(this)
         this.editTask = this.editTask.bind(this)
+        this.addTask = this.addTask.bind(this)
     }
 
     // Render вызывается каждый раз при изменении состояния
@@ -101,6 +102,10 @@ export default class App extends Component {
             // Если изменяем задачу, то перезаписываем массив задач с новыми данными в изменяемой задаче
             this.editTask(id, taskTitle, taskDescription)
         }
+        if (status === 'add') {
+            // При добавлении задач добавляем новую задачу в конец массива задач
+            this.addTask(taskTitle, taskDescription)
+        }
     }
 
     editTask(id, taskTitle, taskDescription) {
@@ -115,6 +120,20 @@ export default class App extends Component {
                 }
                 return task
             })
+        }))
+    }
+
+    addTask(taskTitle, taskDescription) {
+        // Генерируем уникальный id
+        let id = Date.now()
+
+        this.setState(state => ({
+            // Используем spread оператор, раскрываем массив и в конце добавляем новый объект задачи
+            tasks: [...state.tasks, {
+                id: id,
+                title: taskTitle,
+                description: taskDescription
+            }]
         }))
     }
 }
