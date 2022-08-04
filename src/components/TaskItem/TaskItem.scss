@@ -3,4 +3,18 @@
     overflow: hidden;
     text-overflow: ellipsis;
     margin-bottom: 1rem;
+    color: white;
+    padding: .5rem;
+
+    &_pending {
+        background-color: gray;
+    }
+
+    &_process {
+        background-color: DodgerBlue;
+    }
+
+    &_completed {
+        background-color: green;
+    }
 }

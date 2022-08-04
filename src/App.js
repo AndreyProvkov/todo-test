@@ -15,12 +15,20 @@ export default class App extends Component {
                 {
                     id: 1,
                     title: 'Помыть посуду',
-                    description: 'Помыть до 14:00'
+                    description: 'Помыть до 14:00',
+                    status: 'pending'
                 },
                 {
                     id: 2,
                     title: 'Доделать задание',
-                    description: 'Задание доделать до 16ого числа до закрытия приема заявок стажировки'
+                    description: 'Задание доделать быстро и качественно',
+                    status: 'process'
+                },
+                {
+                    id: 3,
+                    title: 'Поспать',
+                    description: 'Поспать хорошо',
+                    status: 'completed'
                 }
             ]
         }
@@ -95,7 +103,7 @@ export default class App extends Component {
         // Отменяем перезагрузку страницы при отправки формы
         e.preventDefault()
         // Используем деструктуризацию массива
-        let [id, taskTitle, taskDescription] = values
+        let [id, taskTitle, taskStatus, taskDescription] = values
 
         // Убираем пробелы на концах строки и несколько пробелов подряд в самой строке
         taskTitle = taskTitle.trim().replace(/\s+/gi, ' ')
@@ -104,22 +112,23 @@ export default class App extends Component {
         // Проверяем состояние приложения
         if (status === 'edit') {
             // Если изменяем задачу, то перезаписываем массив задач с новыми данными в изменяемой задаче
-            this.editTask(id, taskTitle, taskDescription)
+            this.editTask(id, taskTitle, taskStatus, taskDescription)
         }
         if (status === 'add') {
             // При добавлении задач добавляем новую задачу в конец массива задач
-            this.addTask(taskTitle, taskDescription)
+            this.addTask(taskTitle, taskStatus, taskDescription)
         }
     }
 
-    editTask(id, taskTitle, taskDescription) {
+    editTask(id, taskTitle, taskStatus, taskDescription) {
         this.setState(state => ({
             tasks: state.tasks.map(task => {
                 if (task.id === id) {
                     return {
                         id: task.id,
                         title: taskTitle,
-                        description: taskDescription
+                        description: taskDescription,
+                        status: taskStatus
                     }
                 }
                 return task
@@ -127,7 +136,7 @@ export default class App extends Component {
         }))
     }
 
-    addTask(taskTitle, taskDescription) {
+    addTask(taskTitle, taskStatus, taskDescription) {
         // Генерируем уникальный id
         let id = Date.now()
 
@@ -136,7 +145,8 @@ export default class App extends Component {
             tasks: [...state.tasks, {
                 id: id,
                 title: taskTitle,
-                description: taskDescription
+                description: taskDescription,
+                status: taskStatus
             }]
         }))
     }

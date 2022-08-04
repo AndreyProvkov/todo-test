@@ -8,7 +8,13 @@ export default class AppForm extends Component {
         this.state = {
             appStatus: 'watch',
             taskTitle: '',
-            taskDescription: ''
+            taskStatus: this.props.task.status,
+            taskDescription: '',
+            listStatus: {
+                pending: 'Ожидает',
+                process: 'В процессе',
+                completed: 'Выполнена'
+            }
         }
         this.changeAppStatus = this.changeAppStatus.bind(this)
         this.handleChange = this.handleChange.bind(this)
@@ -22,6 +28,7 @@ export default class AppForm extends Component {
         // Определяем переменные
         let buttonText
         let taskTitle
+        let taskStatus
         let taskDescription
         let title
 
@@ -37,6 +44,18 @@ export default class AppForm extends Component {
                     value={this.state.taskTitle}
                     onChange={this.handleChange}
                 />
+            )
+            taskStatus = (
+                <select
+                    className='app-form__select'
+                    name='taskStatus'
+                    value={this.state.taskStatus}
+                    onChange={this.handleChange}
+                >
+                    <option value="pending">Ожидает</option>
+                    <option value="process">В процессе</option>
+                    <option value="completed">Выполнена</option>
+                </select>
             )
             taskDescription = (
                 <textarea
@@ -63,6 +82,11 @@ export default class AppForm extends Component {
                     {task.title}
                 </p>
             )
+            taskStatus = (
+                <span className={`app-form__task-status app-form__task-status_${task.status}`}>
+                    {this.state.listStatus[task.status]}
+                </span>
+            )
             taskDescription = (
                 <p className='app-form__task-info'>
                     {task.description}
@@ -79,6 +103,7 @@ export default class AppForm extends Component {
                         appStatus,
                         task.id,
                         this.state.taskTitle,
+                        this.state.taskStatus,
                         this.state.taskDescription
                     )
                     this.changeAppStatus(e, 'watch')
@@ -117,6 +142,10 @@ export default class AppForm extends Component {
                                 Название задачи
                             </h3>
                             {taskTitle}
+                            <h3 className='app-form__subtitle'>
+                                Статус задачи
+                            </h3>
+                            {taskStatus}
                             <h3 className='app-form__subtitle'>
                                 Описание задачи
                             </h3>
