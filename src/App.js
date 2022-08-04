@@ -28,6 +28,8 @@ export default class App extends Component {
         this.setSelectedTask = this.setSelectedTask.bind(this)
         this.getSelectedTask = this.getSelectedTask.bind(this)
         this.deleteTask = this.deleteTask.bind(this)
+        this.submitTask = this.submitTask.bind(this)
+        this.editTask = this.editTask.bind(this)
     }
 
     // Render вызывается каждый раз при изменении состояния
@@ -43,6 +45,7 @@ export default class App extends Component {
                     <AppForm
                         task={this.getSelectedTask()}
                         deleteTask={this.deleteTask}
+                        submitTask={this.submitTask}
                     />
                 </div>
             </div>
@@ -79,6 +82,33 @@ export default class App extends Component {
         this.setState(state => ({
             tasks: state.tasks.filter(task => {
                 return task.id !== id
+            })
+        }))
+    }
+
+    submitTask(e, status, ...values) {
+        // Отменяем перезагрузку страницы при отправки формы
+        e.preventDefault()
+        // Используем деструктуризацию массива
+        let [id, taskTitle, taskDescription] = values
+        // Проверяем состояние приложения
+        if (status === 'edit') {
+            // Если изменяем задачу, то перезаписываем массив задач с новыми данными в изменяемой задаче
+            this.editTask(id, taskTitle, taskDescription)
+        }
+    }
+
+    editTask(id, taskTitle, taskDescription) {
+        this.setState(state => ({
+            tasks: state.tasks.map(task => {
+                if (task.id === id) {
+                    return {
+                        id: task.id,
+                        title: taskTitle,
+                        description: taskDescription
+                    }
+                }
+                return task
             })
         }))
     }

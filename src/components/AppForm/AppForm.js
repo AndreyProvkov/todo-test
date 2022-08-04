@@ -70,7 +70,20 @@ export default class AppForm extends Component {
         }
 
         return (
-            <form className='app-form'>
+            <form
+                className='app-form'
+                onSubmit={(e) => {
+                    this.props.submitTask(
+                        e,
+                        appStatus,
+                        task.id,
+                        this.state.taskTitle,
+                        this.state.taskDescription
+                    )
+                    this.changeAppStatus(e, 'watch')
+                }
+                }
+            >
                 {
                     // Используем условный рендеринг в зависимости от существования задачи
                     (!task && appStatus !== 'add') ?
