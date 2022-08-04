@@ -94,6 +94,7 @@ export default class AppForm extends Component {
                                         <button
                                             type='button'
                                             className='btn-delete'
+                                            onClick={() => this.props.deleteTask(task.id)}
                                         />
                                     </div>
                                 }

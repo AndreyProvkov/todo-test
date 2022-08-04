@@ -27,6 +27,7 @@ export default class App extends Component {
         // Привязываем контекст класса к методам
         this.setSelectedTask = this.setSelectedTask.bind(this)
         this.getSelectedTask = this.getSelectedTask.bind(this)
+        this.deleteTask = this.deleteTask.bind(this)
     }
 
     // Render вызывается каждый раз при изменении состояния
@@ -41,6 +42,7 @@ export default class App extends Component {
                     />
                     <AppForm
                         task={this.getSelectedTask()}
+                        deleteTask={this.deleteTask}
                     />
                 </div>
             </div>
@@ -55,5 +57,14 @@ export default class App extends Component {
     // На основе id выбранной задачи из списка задач возвращаем соответствующий объект задачи
     getSelectedTask() {
         return this.state.tasks.filter(task => task.id === this.state.selectedTask).pop()
+    }
+
+    // Используем метод filter и удаляем задачу по id
+    deleteTask(id) {
+        this.setState(state => ({
+            tasks: state.tasks.filter(task => {
+                return task.id !== id
+            })
+        }))
     }
 }
