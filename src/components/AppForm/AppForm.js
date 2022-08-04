@@ -21,18 +21,19 @@ export default class AppForm extends Component {
 
         // Определяем переменные
         let buttonText
-        let taskName
+        let taskTitle
         let taskDescription
         let title
 
         // Проверяем состояние приложения, в зависимости от условия присваиваем переменным подходящие значения
         if (appStatus === 'edit' || appStatus === 'add') {
-            taskName = (
+            taskTitle = (
                 <input
                     type='text'
                     className='app-form__input'
                     placeholder='Название задачи'
                     name='taskTitle'
+                    required
                     value={this.state.taskTitle}
                     onChange={this.handleChange}
                 />
@@ -57,7 +58,7 @@ export default class AppForm extends Component {
         }
         if (appStatus === 'watch' && task) {
             title = 'Просмотр'
-            taskName = (
+            taskTitle = (
                 <p className='app-form__task-info'>
                     {task.title}
                 </p>
@@ -115,7 +116,7 @@ export default class AppForm extends Component {
                             <h3 className='app-form__subtitle'>
                                 Название задачи
                             </h3>
-                            {taskName}
+                            {taskTitle}
                             <h3 className='app-form__subtitle'>
                                 Описание задачи
                             </h3>
