@@ -198,6 +198,23 @@ export default class AppForm extends Component {
         )
     }
 
+    // Используем метод жизненного цикла компонента
+    // При обновлении компонента перезаписываем данные состояния формы
+    componentDidUpdate(prevProps, prevState) {
+        // Если находились в режиме редактирования
+        if (prevState.appStatus === 'edit') {
+            // Проверяем было ли переключение задачи на другую
+            // Если было, то меняем данные в форме на текущую задачу
+            if (this.props.task.id !== prevProps.task.id) {
+                this.setState({
+                    taskTitle: this.props.task.title,
+                    taskStatus: this.props.task.status,
+                    taskDescription: this.props.task.description
+                })
+            }
+        }
+    }
+
     // Меняем статус приложения в зависимости от нажатой кнопки
     changeAppStatus(e, status) {
         // Отменяем стандартное поведение кнопки в форме
