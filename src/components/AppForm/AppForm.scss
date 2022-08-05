@@ -1,19 +1,92 @@
 .app-form {
     flex: 1 1 auto;
     padding: 1.5rem;
+    position: relative;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 10rem;
+        background: rgb(255,255,255);
+        background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0) 100%);
+    }
+
+    &__no-task {
+        margin: 0;
+    }
+
+    &__is-task {
+        height: 100%;
+        box-sizing: border-box;
+        padding-bottom: 10rem;
+    }
 
     &__header {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-    }
-
-    &__buttons {
-        display: flex;
-        align-items: center;
         justify-content: space-around;
+        flex-wrap: wrap;
+        margin-bottom: 1.5rem;
+
+        &-title {
+            margin: 0;
+            margin-bottom: 1rem;
+        }
+
+        &-buttons {
+            margin: 0 2rem;
+        }
     }
 
+    &__main {
+        box-sizing: border-box;
+        height: 100%;
+
+        overflow-y: scroll;
+        overflow-x: hidden;
+    
+        &::-webkit-scrollbar {
+            width: 0;
+        }
+    }
+
+    &__subtitle {
+        margin: 0;
+        margin-bottom: 1.5rem;
+    }
+
+    &__task-info {
+        margin: 0;
+        margin-bottom: 1rem;
+    }
+
+    &__input {
+        outline: none;
+        border: none;
+        width: 80%;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+        &:focus {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+        }
+    }
+
+    &__textarea {
+        outline: none;
+        width: 80%;
+        min-height: 10rem;
+        resize: vertical;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+
+        &:focus {
+            border: 1px solid rgba(0, 0, 0, 0.3);
+        }
+    }
 
     &__select option {
 
@@ -34,6 +107,7 @@
         display: inline-block;
         padding: .5rem 1rem;
         color: white;
+        border-radius: .5rem;
 
         &_pending {
             background-color: gray;
@@ -46,6 +120,17 @@
         &_completed {
             background-color: green;
         }
+    }
+
+    &__buttons {
+        position: absolute;
+        width: 100%;
+        margin-top: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        z-index: 1;
+        bottom: 4%;
     }
 }
 
@@ -75,4 +160,44 @@
 
 .btn-delete {
     background-image: url('../../../public/btn-delete.svg');
+}
+
+.btn {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background-color: #fff;
+    padding: .7rem 1.3rem;
+    box-shadow: 0rem 0rem .8rem .2rem rgb(0 0 0 / 10%);
+    transition: .3s all;
+    border-radius: .2rem;
+
+    &:hover {
+        box-shadow: 0rem 0rem .8rem .2rem rgb(0 0 0 / 20%);
+    }
+}
+
+.btn-add {
+    position: absolute;
+    right: 5%;
+    bottom: 5%;
+    border: none;
+    outline: none;
+    box-shadow: 0rem .2rem 1rem .7rem rgb(0 0 0 / 5%);
+    transition: .3s all;
+    border-radius: 50%;
+    padding: 2rem;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: #fff;
+    font-size: 2.5rem;
+    z-index: 1;
+
+    &:hover {
+        box-shadow: 0rem .2rem 1rem .7rem rgb(0 0 0 / 15%);
+    }
 }

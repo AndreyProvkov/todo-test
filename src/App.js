@@ -100,6 +100,7 @@ export default class App extends Component {
         }))
     }
 
+    // Метод для отправки формы
     submitTask(e, status, ...values) {
         // Отменяем перезагрузку страницы при отправки формы
         e.preventDefault()
@@ -121,9 +122,12 @@ export default class App extends Component {
         }
     }
 
+    // Метод для изменения задачи
     editTask(id, taskTitle, taskStatus, taskDescription) {
         this.setState(state => ({
             tasks: state.tasks.map(task => {
+                // Проверяем совпадение id задачи в массиве и полученный id изменяемой задачи
+                // Если идентификаторы совпали, то меняем данные
                 if (task.id === id) {
                     return {
                         id: task.id,
@@ -137,6 +141,7 @@ export default class App extends Component {
         }))
     }
 
+    // Метод для добавления задачи
     addTask(taskTitle, taskStatus, taskDescription) {
         // Генерируем уникальный id
         let id = Date.now()

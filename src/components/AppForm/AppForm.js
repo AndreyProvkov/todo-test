@@ -4,11 +4,11 @@ import './AppForm.scss'
 export default class AppForm extends Component {
     constructor(prop) {
         super(prop)
-        // Объявляем новое состояние, в котором будем хранить текущее состояние приложения (добавление, редактирование или просмотр задачи) и значения текстовых полей
+        // Объявляем новое состояние компонента, в котором будем хранить текущее состояние приложения (добавление, редактирование или просмотр задачи) и значения текстовых полей
         this.state = {
             appStatus: 'watch',
             taskTitle: '',
-            taskStatus: this.props.task.status,
+            taskStatus: '',
             taskDescription: '',
             listStatus: {
                 pending: 'Ожидает',
@@ -52,9 +52,15 @@ export default class AppForm extends Component {
                     value={this.state.taskStatus}
                     onChange={this.handleChange}
                 >
-                    <option value="pending">Ожидает</option>
-                    <option value="process">В процессе</option>
-                    <option value="completed">Выполнена</option>
+                    <option value="pending">
+                        Ожидает
+                    </option>
+                    <option value="process">
+                        В процессе
+                    </option>
+                    <option value="completed">
+                        Выполнена
+                    </option>
                 </select>
             )
             taskDescription = (
@@ -75,6 +81,7 @@ export default class AppForm extends Component {
             title = 'Добавление'
             buttonText = 'Добавить'
         }
+        // Если находимся в режиме просмотра и переданная в компонент задача существует
         if (appStatus === 'watch' && task) {
             title = 'Просмотр'
             taskTitle = (
@@ -112,6 +119,8 @@ export default class AppForm extends Component {
             >
                 {
                     // Используем условный рендеринг в зависимости от существования задачи
+                    // Если задачи нет и находимся не в режиме добавления, то сообщаем, что задач нет
+                    // Иначе показываем данные текущей задачи
                     (!task && appStatus !== 'add') ?
                         <h2 className='app-form__no-task'>
                             Задач нет
@@ -124,7 +133,7 @@ export default class AppForm extends Component {
                                 {
                                     // Отображаем кнопки удаления и редактирования когда находимся в режиме просмотра
                                     (appStatus === 'watch') &&
-                                    <div className='app-form__buttons'>
+                                    <div className='app-form__header-buttons'>
                                         <button
                                             type='button'
                                             className='btn-edit'
@@ -138,20 +147,24 @@ export default class AppForm extends Component {
                                     </div>
                                 }
                             </div>
-                            <h3 className='app-form__subtitle'>
-                                Название задачи
-                            </h3>
-                            {taskTitle}
-                            <h3 className='app-form__subtitle'>
-                                Статус задачи
-                            </h3>
-                            {taskStatus}
-                            <h3 className='app-form__subtitle'>
-                                Описание задачи
-                            </h3>
-                            {taskDescription}
+                            <div className='app-form__main'>
+                                <h3 className='app-form__subtitle'>
+                                    Название задачи
+                                </h3>
+                                {taskTitle}
+                                <hr />
+                                <h3 className='app-form__subtitle'>
+                                    Статус задачи
+                                </h3>
+                                {taskStatus}
+                                <hr />
+                                <h3 className='app-form__subtitle'>
+                                    Описание задачи
+                                </h3>
+                                {taskDescription} 
+                            </div>
                             {
-                                // Отображаем кнопки, когда находимся не в режиме просмотра
+                                // Отображаем кнопки отмены и сохранения/добавления, когда находимся не в режиме просмотра
                                 (appStatus !== 'watch') &&
                                 <div className='app-form__buttons'>
                                     <button
@@ -173,7 +186,7 @@ export default class AppForm extends Component {
                         </div>
                 }
                 {
-                    // Скрываем кнопку "добавить", когда открываем форму добавления
+                    // Показываем кнопку "Добавить", когда находимся в режиме просмотра
                     (appStatus === 'watch') &&
                     <button
                         className='btn-add'
@@ -188,6 +201,23 @@ export default class AppForm extends Component {
         )
     }
 
+    // Используем метод жизненного цикла компонента
+    // При обновлении компонента перезаписываем данные состояния формы
+    componentDidUpdate(prevProps, prevState) {
+        // Если находились в режиме редактирования
+        if (prevState.appStatus === 'edit') {
+            // Проверяем было ли переключение задачи на другую
+            // Если было, то меняем данные в форме на текущую задачу
+            if (this.props.task.id !== prevProps.task.id) {
+                this.setState({
+                    taskTitle: this.props.task.title,
+                    taskStatus: this.props.task.status,
+                    taskDescription: this.props.task.description
+                })
+            }
+        }
+    }
+
     // Меняем статус приложения в зависимости от нажатой кнопки
     changeAppStatus(e, status) {
         // Отменяем стандартное поведение кнопки в форме
@@ -199,11 +229,13 @@ export default class AppForm extends Component {
         if (status === 'edit') {
             this.setState({
                 taskTitle: this.props.task.title,
+                taskStatus: this.props.task.status,
                 taskDescription: this.props.task.description
             })
         } else {
             this.setState({
                 taskTitle: '',
+                taskStatus: 'pending',
                 taskDescription: ''
             })
         }
