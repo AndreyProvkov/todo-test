@@ -57,6 +57,7 @@ export default class AppList extends Component {
         resizable.style.width = e.clientX - resizable.offsetLeft + 'px'
     }
 
+    // Метод для события нажатия клавиши мыши
     mouseDown(e) {
         // Отменяем выделение браузера по умолчанию
         e.preventDefault()
@@ -66,6 +67,7 @@ export default class AppList extends Component {
         document.addEventListener('mouseup', this.mouseUp);
     }
 
+    // Метод для отпускания клавиши мыши
     mouseUp() {
         // При отпускании кнопки мыши удаляем обработчики события
         document.removeEventListener('mouseup', this.mouseUp);

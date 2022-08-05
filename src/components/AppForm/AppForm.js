@@ -4,7 +4,7 @@ import './AppForm.scss'
 export default class AppForm extends Component {
     constructor(prop) {
         super(prop)
-        // Объявляем новое состояние, в котором будем хранить текущее состояние приложения (добавление, редактирование или просмотр задачи) и значения текстовых полей
+        // Объявляем новое состояние компонента, в котором будем хранить текущее состояние приложения (добавление, редактирование или просмотр задачи) и значения текстовых полей
         this.state = {
             appStatus: 'watch',
             taskTitle: '',
@@ -81,6 +81,7 @@ export default class AppForm extends Component {
             title = 'Добавление'
             buttonText = 'Добавить'
         }
+        // Если находимся в режиме просмотра и переданная в компонент задача существует
         if (appStatus === 'watch' && task) {
             title = 'Просмотр'
             taskTitle = (
@@ -118,6 +119,8 @@ export default class AppForm extends Component {
             >
                 {
                     // Используем условный рендеринг в зависимости от существования задачи
+                    // Если задачи нет и находимся не в режиме добавления, то сообщаем, что задач нет
+                    // Иначе показываем данные текущей задачи
                     (!task && appStatus !== 'add') ?
                         <h2 className='app-form__no-task'>
                             Задач нет
@@ -161,7 +164,7 @@ export default class AppForm extends Component {
                                 {taskDescription} 
                             </div>
                             {
-                                // Отображаем кнопки, когда находимся не в режиме просмотра
+                                // Отображаем кнопки отмены и сохранения/добавления, когда находимся не в режиме просмотра
                                 (appStatus !== 'watch') &&
                                 <div className='app-form__buttons'>
                                     <button

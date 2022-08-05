@@ -43,6 +43,7 @@
 
     &_process {
         border-bottom: 1px solid dodgerblue;
+        // Используем ранее созданный шаблон стиля
         @extend %select-status;
         
         &::before,
