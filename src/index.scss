@@ -1,5 +1,9 @@
 // Задаем базовые стили
 
+// Подключаем шрифты
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+
+
 html {
     font-size: 10px;
 }
@@ -8,6 +12,7 @@ body {
     margin: 0;
     height: 100vh;
     font-size: 1.6rem;
+    font-family: 'Lato', Arial, sans-serif;
 }
 
 #root {
