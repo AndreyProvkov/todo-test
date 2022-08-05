@@ -226,11 +226,13 @@ export default class AppForm extends Component {
         if (status === 'edit') {
             this.setState({
                 taskTitle: this.props.task.title,
+                taskStatus: this.props.task.status,
                 taskDescription: this.props.task.description
             })
         } else {
             this.setState({
                 taskTitle: '',
+                taskStatus: 'pending',
                 taskDescription: ''
             })
         }
