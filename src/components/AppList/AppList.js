@@ -18,21 +18,31 @@ export default class AppList extends Component {
     render() {
         return (
             <div className='app-list'>
-                <h2 className='app-list__title'>
-                    Задачи
-                </h2>
-                <input className='app-list__search-input' type='text' placeholder='Поиск задач' value={this.state.value} onInput={this.searchFilter} />
+                <header className='app-list__header'>
+                    <h2 className='app-list__title'>
+                        Задачи
+                    </h2>
+                    <input
+                        className='app-list__search-input'
+                        type='text'
+                        placeholder='Поиск задач'
+                        value={this.state.value}
+                        onInput={this.searchFilter}
+                    />
+                </header>
                 <TaskList
-                    // Прокидываем далее в компонент свойства и методы
+                    // Прокидываем далее в наш компонент свойства и методы
                     tasks={this.getFilterTasks()}
                     selectedTask={this.props.selectedTask}
                     setSelectedTask={this.props.setSelectedTask}
                 />
                 <div
-                    // Используем дополнительный блок и размещаем его справа от списка задач на всю высоту
+                    // Используем блок, тянув за который будем изменять размер блока с задачами, и размещаем его справа от списка задач на всю высоту
                     // Добавляем обработчик по нажатию и удержанию клавиши мыши
                     onMouseDown={this.mouseDown}
-                    className='app-list__resize'></div>
+                    className='app-list__resize'
+                >
+                </div>
             </div>
         )
     }
@@ -51,7 +61,7 @@ export default class AppList extends Component {
         // Отменяем выделение браузера по умолчанию
         e.preventDefault()
 
-        // Устанавливаем обработчики событий перемещения мыши и отпускания клавиши при нажатии клавиши мыши
+        // Устанавливаем обработчики событий перемещения мыши и отпускания клавиши
         document.addEventListener('mousemove', this.mouseMove);
         document.addEventListener('mouseup', this.mouseUp);
     }
@@ -72,10 +82,7 @@ export default class AppList extends Component {
     getFilterTasks() {
         // Возвращаем новый массив задач, у которых наименование удовлетворяет строке поиска (если есть какое-либо совпадение, то задачу добавляем в новый массив)
         return this.props.tasks.filter(task => {
-            if (task.title.toLowerCase().includes(this.state.value)) {
-                return true
-            }
-            return false
+            return task.title.toLowerCase().includes(this.state.value)
         })
     }
 }
