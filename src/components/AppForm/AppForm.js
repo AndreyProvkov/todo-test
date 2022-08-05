@@ -8,7 +8,7 @@ export default class AppForm extends Component {
         this.state = {
             appStatus: 'watch',
             taskTitle: '',
-            taskStatus: this.props.task.status,
+            taskStatus: '',
             taskDescription: '',
             listStatus: {
                 pending: 'Ожидает',
@@ -52,9 +52,15 @@ export default class AppForm extends Component {
                     value={this.state.taskStatus}
                     onChange={this.handleChange}
                 >
-                    <option value="pending">Ожидает</option>
-                    <option value="process">В процессе</option>
-                    <option value="completed">Выполнена</option>
+                    <option value="pending">
+                        Ожидает
+                    </option>
+                    <option value="process">
+                        В процессе
+                    </option>
+                    <option value="completed">
+                        Выполнена
+                    </option>
                 </select>
             )
             taskDescription = (
@@ -124,7 +130,7 @@ export default class AppForm extends Component {
                                 {
                                     // Отображаем кнопки удаления и редактирования когда находимся в режиме просмотра
                                     (appStatus === 'watch') &&
-                                    <div className='app-form__buttons'>
+                                    <div className='app-form__header-buttons'>
                                         <button
                                             type='button'
                                             className='btn-edit'
@@ -138,18 +144,22 @@ export default class AppForm extends Component {
                                     </div>
                                 }
                             </div>
-                            <h3 className='app-form__subtitle'>
-                                Название задачи
-                            </h3>
-                            {taskTitle}
-                            <h3 className='app-form__subtitle'>
-                                Статус задачи
-                            </h3>
-                            {taskStatus}
-                            <h3 className='app-form__subtitle'>
-                                Описание задачи
-                            </h3>
-                            {taskDescription}
+                            <div className='app-form__main'>
+                                <h3 className='app-form__subtitle'>
+                                    Название задачи
+                                </h3>
+                                {taskTitle}
+                                <hr />
+                                <h3 className='app-form__subtitle'>
+                                    Статус задачи
+                                </h3>
+                                {taskStatus}
+                                <hr />
+                                <h3 className='app-form__subtitle'>
+                                    Описание задачи
+                                </h3>
+                                {taskDescription} 
+                            </div>
                             {
                                 // Отображаем кнопки, когда находимся не в режиме просмотра
                                 (appStatus !== 'watch') &&
@@ -173,7 +183,7 @@ export default class AppForm extends Component {
                         </div>
                 }
                 {
-                    // Скрываем кнопку "добавить", когда открываем форму добавления
+                    // Показываем кнопку "Добавить", когда находимся в режиме просмотра
                     (appStatus === 'watch') &&
                     <button
                         className='btn-add'
